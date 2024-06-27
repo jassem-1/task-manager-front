@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-
+import ViewPage from './component/ViewPage';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CalendarView from './component/CalendarView';
+import ListView from './component/ListView';
 function App() {
   return (
+    <BrowserRouter>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+      <Route path='/' element={<ViewPage view={<ListView/>} index={1}/>} />
+      <Route path='/ListView' element={<ViewPage view={<ListView/>} index={1}/>} />
+      <Route path='/Calendar' element={<ViewPage index={2} view={<CalendarView/>}/>} />
+      </Routes>
     </div>
+    
+    </BrowserRouter>
   );
 }
 
