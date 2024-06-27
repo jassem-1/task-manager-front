@@ -4,8 +4,7 @@ import { NotificationContext } from './ViewPage';
 import Notification from './Notification';
 
 const AddTaskModal = ({ isOpen, onClose }) => {
-    const notification = useContext(NotificationContext);
-
+  const notification = useContext(NotificationContext);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -17,20 +16,24 @@ const AddTaskModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     try {
       const newTask = { title, description, dueDate, time, category };
-      await axios.post('http://localhost:3002/api/tasks/add', newTask);
-      const {data} = await axios.post("http://localhost:3002/api/tasks/add",newTask);
+      const { data } = await axios.post('http://localhost:3002/api/tasks/add', newTask);
 
-      if(data.success === true){
-        notification(currentValue=>{
-            if(currentValue){
-                return [...currentValue,<Notification  msg={data.msg} type="success"/>];
-            }
-                return [<Notification  msg={data.msg} type="success"/>]; 
-        });
+      if (data.success === true) {
+        notification(currentValue => {
+          if (currentValue) {
+            return [...currentValue, <Notification key={Date.now()} msg={data.msg} type="success" />];
           }
-                onClose();
-      window.location.reload(); 
+          return [<Notification key={Date.now()} msg={data.msg} type="success" />];
+        });
 
+        // Close the modal after successful submission
+        onClose();
+
+        // Delay before refreshing the page
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000); // Adjust the delay time (in milliseconds) as needed
+      }
     } catch (error) {
       console.error('There was an error adding the task!', error);
     }
@@ -92,11 +95,7 @@ const AddTaskModal = ({ isOpen, onClose }) => {
             />
           </div>
           <div className="flex justify-end">
-            <button
-              type="button"
-              className="px-4 py-2 bg-gray-300 rounded mr-2"
-              onClick={onClose}
-            >
+            <button type="button" className="px-4 py-2 bg-gray-300 rounded mr-2" onClick={onClose}>
               Cancel
             </button>
             <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">

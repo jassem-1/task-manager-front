@@ -33,12 +33,15 @@ export default function Main({view, index}){
       {/*   <button id="add_task" onClick={toggleForm}>
         <i className="fa-solid fa-plus"></i>
         </button> */}
-          <button
+        <div className="w-full bg-white p-4">
+        <button
           className="px-4 py-2 bg-blue-500 text-white rounded"
           onClick={openModal}
         >
           Add Task
         </button>
+        </div>
+         
         {listView}
         <AddTaskModal isOpen={isModalOpen} onClose={closeModal} />
 

@@ -12,26 +12,30 @@ export default function ListView() {
     const [completedTasks, setCompletedTasks] = useState([]);
 
     const getTasks = async () => {
-        const { data } = await axios.get("http://localhost:3002/api/tasks");
-        if (data.success === true && data.data.length > 0) {
-            const toDo = data.data
-                .filter(e => e.state === "to do")
-                .map((e, i) => <TaskListRow key={i} {...e} />);
-            setToDoTasks(toDo.length > 0 ? toDo : <li className="empty_list">List is empty</li>);
+        try {
+            const { data } = await axios.get("http://localhost:3002/api/tasks");
+            if (data.success === true && data.data.length > 0) {
+                const toDo = data.data
+                    .filter(e => e.state === "to do")
+                    .map((e, i) => <TaskListRow key={i} {...e} />);
+                setToDoTasks(toDo);
 
-            const inProgress = data.data
-                .filter(e => e.state === "in progress")
-                .map((e, i) => <TaskListRow key={i} {...e} />);
-            setInProgressTasks(inProgress.length > 0 ? inProgress : <li className="empty_list">List is empty</li>);
+                const inProgress = data.data
+                    .filter(e => e.state === "in progress")
+                    .map((e, i) => <TaskListRow key={i} {...e} />);
+                setInProgressTasks(inProgress);
 
-            const completed = data.data
-                .filter(e => e.state === "completed")
-                .map((e, i) => <TaskListRow key={i} {...e} />);
-            setCompletedTasks(completed.length > 0 ? completed : <li className="empty_list">List is empty</li>);
-        } else {
-            setToDoTasks(<li className="empty_list">List is empty</li>);
-            setInProgressTasks(<li className="empty_list">List is empty</li>);
-            setCompletedTasks(<li className="empty_list">List is empty</li>);
+                const completed = data.data
+                    .filter(e => e.state === "completed")
+                    .map((e, i) => <TaskListRow key={i} {...e} />);
+                setCompletedTasks(completed);
+            } else {
+                setToDoTasks([]);
+                setInProgressTasks([]);
+                setCompletedTasks([]);
+            }
+        } catch (error) {
+            console.error("Error fetching tasks:", error);
         }
     };
 
@@ -39,38 +43,40 @@ export default function ListView() {
         getTasks();
     }, [updateTasks]);
 
+    const renderTaskList = (tasks) => {
+        // Display a maximum of 4 tasks, make the list scrollable if more tasks are present
+        return (
+            <ul className="w-full space-y-2" style={{ maxHeight: "calc(4 * 7rem)", overflowY: "auto" }}>
+                {tasks.length > 0 ? tasks.slice(0, 4) : <li className="empty_list">List is empty</li>}
+            </ul>
+        );
+    };
+
     return (
         <TasksContext.Provider value={setUpdateTasks}>
-         <div className="flex justify-evenly items-start p-6 bg-gray-100 min-h-screen" id="task_lists">
-    <div className="task_list w-full max-w-sm bg-white shadow-lg rounded-lg p-4 mx-2">
-        <div className="task_list_header border-b pb-2 mb-4">
-            <h4 className="text-xl font-semibold text-gray-700">TO DO</h4>
-            <h6 className="text-sm text-gray-500">tasks {toDoTasks.length}</h6>
-        </div>
-        <ul className="w-full space-y-2">
-            {toDoTasks}
-        </ul>
-    </div>
-    <div className="task_list w-full max-w-sm bg-white shadow-lg rounded-lg p-4 mx-2">
-        <div className="task_list_header border-b pb-2 mb-4">
-            <h4 className="text-xl font-semibold text-gray-700">IN PROGRESS</h4>
-            <h6 className="text-sm text-gray-500">tasks {inProgressTasks.length}</h6>
-        </div>
-        <ul className="w-full space-y-2">
-            {inProgressTasks}
-        </ul>
-    </div>
-    <div className="task_list w-full max-w-sm bg-white shadow-lg rounded-lg p-4 mx-2">
-        <div className="task_list_header border-b pb-2 mb-4">
-            <h4 className="text-xl font-semibold text-gray-700">COMPLETED</h4>
-            <h6 className="text-sm text-gray-500">tasks {completedTasks.length}</h6>
-        </div>
-        <ul className="w-full space-y-2">
-            {completedTasks}
-        </ul>
-    </div>
-</div>
-
+            <div className="flex justify-evenly items-start p-6 bg-gray-100 min-h-screen" id="task_lists">
+                <div className="task_list w-full max-w-sm bg-white shadow-lg rounded-lg p-4 mx-2">
+                    <div className="task_list_header border-b pb-2 mb-4">
+                        <h4 className="text-xl font-semibold text-gray-700">TO DO</h4>
+                        <h6 className="text-sm text-gray-500">tasks {toDoTasks.length === 0 ? '0' : toDoTasks.length}</h6>
+                    </div>
+                    {renderTaskList(toDoTasks)}
+                </div>
+                <div className="task_list w-full max-w-sm bg-white shadow-lg rounded-lg p-4 mx-2">
+                    <div className="task_list_header border-b pb-2 mb-4">
+                        <h4 className="text-xl font-semibold text-gray-700">IN PROGRESS</h4>
+                        <h6 className="text-sm text-gray-500">tasks {inProgressTasks.length === 0 ? '0' : inProgressTasks.length}</h6>
+                    </div>
+                    {renderTaskList(inProgressTasks)}
+                </div>
+                <div className="task_list w-full max-w-sm bg-white shadow-lg rounded-lg p-4 mx-2">
+                    <div className="task_list_header border-b pb-2 mb-4">
+                        <h4 className="text-xl font-semibold text-gray-700">COMPLETED</h4>
+                        <h6 className="text-sm text-gray-500">tasks {completedTasks.length === 0 ? '0' : completedTasks.length}</h6>
+                    </div>
+                    {renderTaskList(completedTasks)}
+                </div>
+            </div>
         </TasksContext.Provider>
     );
 }

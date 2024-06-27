@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Example custom styles for React Big Calendar */
+.rbc-calendar {
+    width: 600px;
+    height: 500px; /* Adjust height as needed */
+  }
+
+  
+
+  
+  .rbc-toolbar {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(128, 128, 128, 0.403); /* Dark background color for toolbar */
+    color: black; 
+    padding:0px !important;
+    gap: 10px !important;
+    font-size: 15px !important;
+  }
+  
+  .rbc-btn-group {
+    margin-top: 10px; /* Adjust spacing between calendar and buttons */
+  }
+  .rbc-header {
+    background-color: white; /* Dark background color for header */
+  }
+  
+  .rbc-month-row,
+  .rbc-month-view {
+    background-color: white; /* Dark background color for month view */
+  }
+  
+  .rbc-event {
+    background-color: #666; /* Dark background color for events */
+    border: none; /* Remove borders */
+    color: white; /* Text color */
+  }
+  
