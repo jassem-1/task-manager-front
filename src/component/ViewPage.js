@@ -1,5 +1,5 @@
 import "./ViewPage.css";
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import AddTaskModal from "./AddTaskForm";
 
@@ -9,14 +9,12 @@ export default function Main({ view, index }) {
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
     const [notification, setNotification] = useState();
-    const taskForm = useRef(null);
     const [listView, setListView] = useState(view);
-    const [reRenderTasks, setReRenderTasks] = useState(false);
     const [dashboard, setDashboard] = useState(<Sidebar key={index} index={index} />);
 
     useEffect(() => {
         setListView(current => [current]);
-    }, [reRenderTasks]);
+    }, []);
 
     useEffect(() => {
         setListView(view);
@@ -43,5 +41,5 @@ export default function Main({ view, index }) {
                 </div>
             </div>
         </NotificationContext.Provider>
-    )
+    );
 }
