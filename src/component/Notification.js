@@ -3,7 +3,7 @@ import "./Notification.css";
 
 
 export default function Notification ({type, msg}){
-    const notifType = type == "success" ? "success_notif" : type="error" ?"error_notif":"";
+    const notifType = type === "success" ? "success_notif" : type="error" ?"error_notif":"";
     const notif = useRef();
     useEffect(()=>{
         if(notif.current){
@@ -19,9 +19,9 @@ export default function Notification ({type, msg}){
     },[])
     return(      
         <div className= {"notification " + notifType} ref={notif}> 
-            <div className={`notif_icon ${type == "success" ? "success_icon" : type="error" ?"error_icon":""}`}>
+            <div className={`notif_icon ${type === "success" ? "success_icon" : type="error" ?"error_icon":""}`}>
             
-            <i className={`fa-solid ${type == "success" ? "fa-circle-check" : type="error" ?"fa-triangle-exclamation":""}`}></i>
+            <i className={`fa-solid ${type === "success" ? "fa-circle-check" : type="error" ?"fa-triangle-exclamation":""}`}></i>
             </div>
             {msg}
             <i className="fa-solid fa-xmark" onClick={e=>e.target.parentElement.remove()}></i>

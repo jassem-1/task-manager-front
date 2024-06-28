@@ -12,7 +12,7 @@ export default function Sidebar({ index }) {
         if (window.innerWidth > 830) {
             smallAsideRef.current.style.display = "none";
         }
-    }, [index]);
+    },  [index, listRef, calendarRef, smallAsideRef]);
 
     return (
         <>
