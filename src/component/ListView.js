@@ -43,15 +43,6 @@ export default function ListView() {
         getTasks();
     }, [updateTasks]);
 
-    const renderTaskList = (tasks) => {
-        // Display a maximum of 4 tasks, make the list scrollable if more tasks are present
-        return (
-            <ul className="w-full space-y-2" style={{ maxHeight: "calc(4 * 7rem)", overflowY: "auto" }}>
-                {tasks.length > 0 ? tasks.slice(0, 4) : <li className="empty_list">List is empty</li>}
-            </ul>
-        );
-    };
-
     return (
         <TasksContext.Provider value={setUpdateTasks}>
             <div className="flex justify-evenly items-start p-6 bg-gray-100 min-h-screen" id="task_lists">
@@ -60,21 +51,27 @@ export default function ListView() {
                         <h4 className="text-xl font-semibold text-gray-700">TO DO</h4>
                         <h6 className="text-sm text-gray-500">tasks {toDoTasks.length === 0 ? '0' : toDoTasks.length}</h6>
                     </div>
-                    {renderTaskList(toDoTasks)}
+                    <ul className="w-full space-y-2">
+                        {toDoTasks.length > 0 ? toDoTasks : <li className="empty_list">List is empty</li>}
+                    </ul>
                 </div>
                 <div className="task_list w-full max-w-sm bg-white shadow-lg rounded-lg p-4 mx-2">
                     <div className="task_list_header border-b pb-2 mb-4">
                         <h4 className="text-xl font-semibold text-gray-700">IN PROGRESS</h4>
                         <h6 className="text-sm text-gray-500">tasks {inProgressTasks.length === 0 ? '0' : inProgressTasks.length}</h6>
                     </div>
-                    {renderTaskList(inProgressTasks)}
+                    <ul className="w-full space-y-2">
+                        {inProgressTasks.length > 0 ? inProgressTasks : <li className="empty_list">List is empty</li>}
+                    </ul>
                 </div>
                 <div className="task_list w-full max-w-sm bg-white shadow-lg rounded-lg p-4 mx-2">
                     <div className="task_list_header border-b pb-2 mb-4">
                         <h4 className="text-xl font-semibold text-gray-700">COMPLETED</h4>
                         <h6 className="text-sm text-gray-500">tasks {completedTasks.length === 0 ? '0' : completedTasks.length}</h6>
                     </div>
-                    {renderTaskList(completedTasks)}
+                    <ul className="w-full space-y-2">
+                        {completedTasks.length > 0 ? completedTasks : <li className="empty_list">List is empty</li>}
+                    </ul>
                 </div>
             </div>
         </TasksContext.Provider>

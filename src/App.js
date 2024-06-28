@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ViewPage from './component/ViewPage';
 import ListView from './component/ListView';
@@ -8,15 +8,27 @@ function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [inputCode, setInputCode] = useState('');
 
+  useEffect(() => {
+    // Check localStorage for authentication status
+    const isAuthenticated = localStorage.getItem('authenticated') === 'true';
+    setAuthenticated(isAuthenticated);
+  }, []);
+
   const handleCodeSubmit = (event) => {
     event.preventDefault();
     const accessCode = process.env.REACT_APP_ACCESS_CODE;
 
     if (inputCode === accessCode) {
       setAuthenticated(true);
+      localStorage.setItem('authenticated', 'true'); // Save authentication status
     } else {
       alert('Invalid access code');
     }
+  };
+
+  const handleLogout = () => {
+    setAuthenticated(false);
+    localStorage.removeItem('authenticated'); // Clear authentication status
   };
 
   if (!authenticated) {
@@ -49,16 +61,16 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        <button
+          onClick={handleLogout}
+          className="absolute top-4 right-4 bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 focus:outline-none focus:bg-red-600"
+        >
+          Logout
+        </button>
         <Routes>
           <Route path="/" element={<ViewPage view={<ListView />} index={1} />} />
-          <Route
-            path="/ListView"
-            element={<ViewPage view={<ListView />} index={1} />}
-          />
-          <Route
-            path="/Calendar"
-            element={<ViewPage index={2} view={<CalendarWithTasks />} />}
-          />
+          <Route path="/ListView" element={<ViewPage view={<ListView />} index={1} />} />
+          <Route path="/Calendar" element={<ViewPage index={2} view={<CalendarWithTasks />} />} />
         </Routes>
       </div>
     </BrowserRouter>
