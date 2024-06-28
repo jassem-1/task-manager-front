@@ -30,7 +30,7 @@ const CalendarWithTasks = () => {
     };
   
     return (
-      <div className="flex flex-col items-center justify-center">
+  <div className="flex flex-col items-center p-4 justify-center">
         <Calendar
           localizer={localizer}
           events={getCalendarEvents()}
@@ -41,6 +41,7 @@ const CalendarWithTasks = () => {
         />
        
       </div>
+    
     );
   };
   
