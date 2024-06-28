@@ -9,14 +9,11 @@ export default function Sidebar({ index }) {
         refs.forEach(ref => ref.current.id = "");
         refs[index - 1].current.id = "clicked";
 
-        if (window.innerWidth > 830) {
-            smallAsideRef.current.style.display = "none";
-        }
     },  [index, listRef, calendarRef, smallAsideRef]);
 
     return (
         <div>
-            <aside className="bg-gray-800 min-h-screen text-white w-64 flex-shrink-0 hidden md:block">
+            <aside className="bg-gray-800 h-full text-white w-52 flex-shrink-0 hidden md:block">
                 <div className="p-4">
                     <h2 className="text-2xl font-bold">Logo</h2>
                 </div>
@@ -36,7 +33,7 @@ export default function Sidebar({ index }) {
                  
                 </ul>
             </aside>
-            <div className="md:hidden block fixed  bottom-0 w-full bg-gray-300">
+            <div className="md:hidden block fixed z-40  bottom-0 w-full bg-gray-300">
                 <div className="py-2 px-4">
                 <div className="flex gap-x-2 justify-center items-center">
                     <li className="flex items-center px-4 py-2 hover:bg-gray-700 cursor-pointer" ref={listRef}>

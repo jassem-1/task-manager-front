@@ -45,7 +45,9 @@ export default function ListView() {
 
     return (
         <TasksContext.Provider value={setUpdateTasks}>
-            <div className="flex md:p-0 py-16 md:flex-row flex-col gap-y-2 justify-center md:justify-evenly items-center md:items-start p-6 bg-gray-100 min-h-screen" id="task_lists">
+            <div className="flex md:py-8 md:px-2 
+             py-16 md:flex-row flex-col gap-y-2 justify-center md:justify-evenly items-center md:items-start px-6
+              bg-gray-100 min-h-screen" id="task_lists">
                 <div className="task_list w-full max-w-sm bg-white shadow-lg rounded-lg p-4 mx-2">
                     <div className="task_list_header border-b pb-2 mb-4">
                         <h4 className="text-xl font-semibold text-gray-700">TO DO</h4>
