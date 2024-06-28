@@ -10,7 +10,7 @@ const CalendarWithTasks = () => {
     useEffect(() => {
       const fetchTasks = async () => {
         try {
-          const response = await axios.get('http://localhost:3002/api/tasks');
+          const response = await axios.get('https://back-task-fhij.onrender.com/api/tasks');
           setTasks(response.data.data); // Assuming response structure has data field containing tasks
         } catch (error) {
           console.error('Error fetching tasks:', error);

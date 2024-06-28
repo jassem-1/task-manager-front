@@ -30,7 +30,7 @@ const TaskForm = forwardRef(({ reRenderTasks }, ref) => {
     };
 
     try {
-      const { data } = await axios.post("http://localhost:3002/api/tasks/add", task);
+      const { data } = await axios.post("https://back-task-fhij.onrender.com/api/tasks/add", task);
       if (data.success === true) {
         notification((currentValue) => {
           if (currentValue) {
@@ -43,7 +43,7 @@ const TaskForm = forwardRef(({ reRenderTasks }, ref) => {
         if (img) {
           const formData = new FormData();
           formData.append("image", img);
-          const imgUpload = await axios.post("http://localhost:3002/api/tasks/upload", formData, {
+          const imgUpload = await axios.post("https://back-task-fhij.onrender.com/api/tasks/upload", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },

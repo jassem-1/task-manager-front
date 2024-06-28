@@ -16,7 +16,7 @@ const AddTaskModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     try {
       const newTask = { title, description, dueDate, time, category };
-      const { data } = await axios.post('http://localhost:3002/api/tasks/add', newTask);
+      const { data } = await axios.post('https://back-task-fhij.onrender.com/api/tasks/add', newTask);
 
       if (data.success === true) {
         notification(currentValue => {
